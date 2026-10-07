@@ -1,0 +1,217 @@
+@model IEnumerable<MidExam.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<div class="cart-page">
+
+    <!-- CART HEADER -->
+
+    <div class="cart-header">
+
+        <div>
+
+            <div class="cart-label">
+                TEAM AGNAT YOLAC RACING
+            </div>
+
+            <h1>
+                SHOPPING CART
+            </h1>
+
+            <p>
+                Review your selected motorcycle parts.
+            </p>
+
+        </div>
+
+
+        <a asp-controller="Products"
+           asp-action="Index"
+           class="continue-shopping">
+            ← Continue Shopping
+        </a>
+
+    </div>
+
+
+    @if (!Model.Any())
+    {
+        <!-- EMPTY CART -->
+
+        <div class="empty-cart">
+
+            <div class="empty-cart-icon">
+                🛒
+            </div>
+
+            <h2>
+                YOUR CART IS EMPTY
+            </h2>
+
+            <p>
+                You haven't added any motorcycle parts yet.
+            </p>
+
+            <a asp-controller="Products"
+               asp-action="Index"
+               class="shop-now-btn">
+                SHOP MOTORCYCLE PARTS
+            </a>
+
+        </div>
+    }
+    else
+    {
+        <div class="cart-layout">
+
+            <!-- CART ITEMS -->
+
+            <div class="cart-items">
+
+                @foreach (var item in Model)
+                {
+                    <div class="cart-item">
+
+                        <div class="cart-item-number">
+                            #@item.ProductId.ToString("00")
+                        </div>
+
+
+                        <div class="cart-item-info">
+
+                            <h3>
+                                @item.ProductName
+                            </h3>
+
+                            <span>
+                                MOTORCYCLE PART
+                            </span>
+
+                        </div>
+
+
+                        <div class="cart-item-price">
+
+                            <small>
+                                PRICE
+                            </small>
+
+                            <strong>
+                                ₱@item.Price.ToString("N2")
+                            </strong>
+
+                        </div>
+
+
+                        <!-- QUANTITY -->
+
+                        <form asp-action="UpdateQuantity"
+                              method="post"
+                              class="quantity-form">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@item.Id" />
+
+                            <label>
+                                QTY
+                            </label>
+
+                            <input type="number"
+                                   name="quantity"
+                                   value="@item.Quantity"
+                                   min="1"
+                                   class="quantity-input" />
+
+                            <button type="submit"
+                                    class="update-btn">
+                                UPDATE
+                            </button>
+
+                        </form>
+
+
+                        <!-- REMOVE -->
+
+                        <form asp-action="Remove"
+                              method="post"
+                              class="remove-form">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@item.Id" />
+
+                            <button type="submit"
+                                    class="remove-btn">
+                                ✕
+                            </button>
+
+                        </form>
+
+                    </div>
+                }
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="cart-summary">
+
+                <div class="summary-title">
+                    ORDER SUMMARY
+                </div>
+
+                <div class="summary-line">
+                    <span>
+                        Items
+                    </span>
+
+                    <strong>
+                        @Model.Sum(x => x.Quantity)
+                    </strong>
+                </div>
+
+                <div class="summary-line">
+                    <span>
+                        Products
+                    </span>
+
+                    <strong>
+                        @Model.Count()
+                    </strong>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-total">
+
+                    <span>
+                        TOTAL
+                    </span>
+
+                    <strong>
+                        ₱@Model.Sum(x => x.Price * x.Quantity).ToString("N2")
+                    </strong>
+
+                </div>
+
+
+                <button class="checkout-btn"
+                        type="button">
+                    PROCEED TO CHECKOUT →
+                </button>
+
+
+                <div class="secure-note">
+                    🔒 Secure motorcycle parts order
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
