@@ -6,7 +6,9 @@
 
 <div class="cart-page">
 
-    <!-- CART HEADER -->
+    <!-- =====================================================
+         CART HEADER
+         ===================================================== -->
 
     <div class="cart-header">
 
@@ -36,10 +38,12 @@
     </div>
 
 
+    <!-- =====================================================
+         EMPTY CART
+         ===================================================== -->
+
     @if (!Model.Any())
     {
-        <!-- EMPTY CART -->
-
         <div class="empty-cart">
 
             <div class="empty-cart-icon">
@@ -64,9 +68,16 @@
     }
     else
     {
+        <!-- =================================================
+             CART CONTENT
+             ================================================= -->
+
         <div class="cart-layout">
 
-            <!-- CART ITEMS -->
+
+            <!-- =============================================
+                 CART ITEMS
+                 ============================================= -->
 
             <div class="cart-items">
 
@@ -74,10 +85,15 @@
                 {
                     <div class="cart-item">
 
+
+                        <!-- PRODUCT NUMBER -->
+
                         <div class="cart-item-number">
                             #@item.ProductId.ToString("00")
                         </div>
 
+
+                        <!-- PRODUCT INFORMATION -->
 
                         <div class="cart-item-info">
 
@@ -92,6 +108,8 @@
                         </div>
 
 
+                        <!-- PRICE -->
+
                         <div class="cart-item-price">
 
                             <small>
@@ -105,7 +123,9 @@
                         </div>
 
 
-                        <!-- QUANTITY -->
+                        <!-- =================================
+                             QUANTITY
+                             ================================= -->
 
                         <form asp-action="UpdateQuantity"
                               method="post"
@@ -133,7 +153,9 @@
                         </form>
 
 
-                        <!-- REMOVE -->
+                        <!-- =================================
+                             REMOVE
+                             ================================= -->
 
                         <form asp-action="Remove"
                               method="post"
@@ -144,7 +166,8 @@
                                    value="@item.Id" />
 
                             <button type="submit"
-                                    class="remove-btn">
+                                    class="remove-btn"
+                                    title="Remove item">
                                 ✕
                             </button>
 
@@ -156,7 +179,9 @@
             </div>
 
 
-            <!-- ORDER SUMMARY -->
+            <!-- =============================================
+                 ORDER SUMMARY
+                 ============================================= -->
 
             <div class="cart-summary">
 
@@ -164,7 +189,11 @@
                     ORDER SUMMARY
                 </div>
 
+
+                <!-- TOTAL ITEMS -->
+
                 <div class="summary-line">
+
                     <span>
                         Items
                     </span>
@@ -172,9 +201,14 @@
                     <strong>
                         @Model.Sum(x => x.Quantity)
                     </strong>
+
                 </div>
 
+
+                <!-- TOTAL PRODUCTS -->
+
                 <div class="summary-line">
+
                     <span>
                         Products
                     </span>
@@ -182,9 +216,14 @@
                     <strong>
                         @Model.Count()
                     </strong>
+
                 </div>
 
+
                 <div class="summary-divider"></div>
+
+
+                <!-- GRAND TOTAL -->
 
                 <div class="summary-total">
 
@@ -199,11 +238,7 @@
                 </div>
 
 
-                <button class="checkout-btn"
-                        type="button">
-                    PROCEED TO CHECKOUT →
-                </button>
-
+                <!-- SECURITY NOTE -->
 
                 <div class="secure-note">
                     🔒 Secure motorcycle parts order
