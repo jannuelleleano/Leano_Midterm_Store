@@ -5,27 +5,16 @@
     var search = ViewData["Search"]?.ToString();
 }
 
-<div class="racing-page">
+<div class="products-page">
 
-    <!-- SHOP HEADER -->
-    <div class="shop-header">
+    <div class="products-header">
 
-        <div class="shop-brand">
-            <div class="brand-line"></div>
-
-            <div>
-                <div class="shop-name">
-                    TEAM AGNAT YOLAC
-                </div>
-
-                <div class="shop-subtitle">
-                    RACING • MOTORCYCLE PARTS • PERFORMANCE
-                </div>
-            </div>
-        </div>
+        <h1>
+            Team Agnat Yolac Racing Products
+        </h1>
 
         <a asp-action="Create"
-           class="btn add-product-btn">
+           class="add-product-button">
             + Add Product
         </a>
 
@@ -33,29 +22,22 @@
 
 
     <!-- SEARCH -->
+
     <div class="search-section">
 
         <form asp-action="Index"
               method="get"
               class="search-form">
 
-            <div class="search-wrapper">
-
-                <span class="search-symbol">
-                    🔍
-                </span>
-
-                <input type="text"
-                       name="search"
-                       value="@search"
-                       class="search-input"
-                       placeholder="Search motorcycle parts..." />
-
-            </div>
+            <input type="text"
+                   name="search"
+                   value="@search"
+                   class="search-input"
+                   placeholder="Search product name..." />
 
             <button type="submit"
-                    class="btn search-btn">
-                SEARCH
+                    class="search-button">
+                Search
             </button>
 
             @if (!string.IsNullOrWhiteSpace(search))
@@ -72,43 +54,44 @@
 
 
     <!-- SEARCH RESULT -->
+
     @if (!string.IsNullOrWhiteSpace(search))
     {
         <div class="search-result">
 
-            <span>
-                Search results for:
-                <strong>"@search"</strong>
-            </span>
+            Search results for:
+            <strong>
+                "@search"
+            </strong>
 
-            <span>
-                @Model.Count() product(s) found
-            </span>
+            —
+            @Model.Count() product(s) found
 
         </div>
     }
 
 
     <!-- PRODUCTS -->
+
     @if (!Model.Any())
     {
         <div class="empty-products">
 
             <div class="empty-icon">
-                🏍️
+                🛒
             </div>
 
             <h3>
-                No parts found
+                No products found
             </h3>
 
             <p>
-                Try searching for another motorcycle part or category.
+                Try searching for another product.
             </p>
 
             <a asp-action="Index"
-               class="btn search-btn">
-                VIEW ALL PARTS
+               class="shop-now-btn">
+                View All Products
             </a>
 
         </div>
@@ -121,30 +104,19 @@
             {
                 <div class="product-card">
 
-                    <!-- RACING STRIPE -->
-                    <div class="racing-stripe"></div>
+                    <!-- PRODUCT INFORMATION -->
 
-
-                    <!-- PRODUCT BODY -->
                     <div class="product-body">
 
                         <div class="product-top">
 
-                            <div>
+                            <h2 class="product-name">
+                                @product.Name
+                            </h2>
 
-                                <h2 class="product-name">
-                                    @product.Name
-                                </h2>
-
-                                <span class="product-category">
-                                    @product.Category
-                                </span>
-
-                            </div>
-
-                            <div class="product-number">
-                                #@product.Id.ToString("00")
-                            </div>
+                            <span class="product-category">
+                                @product.Category
+                            </span>
 
                         </div>
 
@@ -160,17 +132,16 @@
                                 ₱@product.Price.ToString("N2")
                             </div>
 
-                            <div class="performance-label">
-                                RACING PART
-                            </div>
-
                         </div>
 
                     </div>
 
 
-                    <!-- PRODUCT ACTIONS -->
+                    <!-- BUTTONS -->
+
                     <div class="product-footer">
+
+                        <!-- ADD TO CART -->
 
                         <form asp-action="AddToCart"
                               method="post"
@@ -181,24 +152,28 @@
                                    value="@product.Id" />
 
                             <button type="submit"
-                                    class="btn add-cart-btn">
-                                🛒 ADD TO CART
+                                    class="add-cart-btn">
+                                Add to Cart
                             </button>
 
                         </form>
 
 
+                        <!-- EDIT -->
+
                         <a asp-action="Edit"
                            asp-route-id="@product.Id"
-                           class="btn edit-btn">
-                            EDIT
+                           class="edit-btn">
+                            Edit
                         </a>
 
 
+                        <!-- DELETE -->
+
                         <a asp-action="Delete"
                            asp-route-id="@product.Id"
-                           class="btn delete-btn">
-                            DELETE
+                           class="delete-btn">
+                            Delete
                         </a>
 
                     </div>
@@ -211,12 +186,13 @@
 
 
     <!-- CART -->
+
     <div class="cart-section">
 
         <a asp-controller="Cart"
            asp-action="Index"
            class="cart-link">
-            🛒 VIEW SHOPPING CART
+            View Shopping Cart →
         </a>
 
     </div>
